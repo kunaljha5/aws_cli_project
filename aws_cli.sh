@@ -165,7 +165,7 @@ echo "
                                 5. Set Output Format
                                 6. Set AWS ACCESS KEY ID
                                 7. Set AWS SECRET ACCESS KEY
-                                8. 
+                                8. List S3 Bucket
                                 E. Exit 
                                
                                "
