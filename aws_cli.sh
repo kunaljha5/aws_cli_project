@@ -168,6 +168,10 @@ echo "
                                 8. List S3 Bucket
                                 9. List CodeCommit Repos
                                 10. List Storage Volumes
+                                11. Terminate EC2 Instance
+                                12. List running instance of default region
+                                13. List Security Groups in All Region
+                                14. Launch EC2 Instance
                                 E. Exit 
                                
                                "
@@ -310,6 +314,55 @@ case $input in
 		                aws ec2 describe-volumes --output text  --region eu-west-2 |sed "s|^| eu-west-2 \t|g"
 		                aws ec2 describe-volumes --output text  --region eu-west-3 |sed "s|^| eu-west-3 \t|g"
 		                aws ec2 describe-volumes --output text  --region sa-east-1 |sed "s|^| sa-east-1 \t|g";;
+	11)
+                                read -p "Enter the instance id that need to be terminated: " instance_id
+                                aws ec2 describe-regions --output text| awk '{print $NF}'|nl
+                                
+                                read -p "Enter the Number of your choice: " number
+                                
+                                region=$(aws ec2 describe-regions --output text| awk '{print $NF}'|nl| awk -v var=$number '{if ($1 == var) print $2}') 
+	                                aws ec2 terminate-instances --instance-ids $instance_id --region $region;;
+	12)
+	                               aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table  |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -;;
+                13)
+		aws ec2 describe-security-groups  --output text   --region us-east-1| grep  SECURITYGROUPS| sed "s|^| us-east-1 \t|g"
+		aws ec2 describe-security-groups  --output text   --region us-east-2 | grep  SECURITYGROUPS| sed "s|^| us-east-2 \t|g"
+		aws ec2 describe-security-groups  --output text   --region us-west-1 | grep  SECURITYGROUPS| sed "s|^| us-west-1 \t|g"
+		aws ec2 describe-security-groups  --output text   --region us-west-2 | grep  SECURITYGROUPS| sed "s|^| us-west-2 \t|g"
+		aws ec2 describe-security-groups  --output text   --region ap-northeast-1 | grep  SECURITYGROUPS| sed "s|^| ap-northeast-1 \t|g"
+		aws ec2 describe-security-groups  --output text   --region ap-northeast-2 | grep  SECURITYGROUPS| sed "s|^| ap-northeast-2 \t|g"
+		aws ec2 describe-security-groups  --output text   --region ap-south-1 | grep  SECURITYGROUPS| sed "s|^| ap-south-1 \t|g"
+		aws ec2 describe-security-groups  --output text   --region ap-southeast-1 | grep  SECURITYGROUPS| sed "s|^| ap-southeast-1 \t|g"
+		aws ec2 describe-security-groups  --output text   --region ap-southeast-2 | grep  SECURITYGROUPS| sed "s|^| ap-southeast-2 \t|g"
+		aws ec2 describe-security-groups  --output text   --region eu-central-1 | grep  SECURITYGROUPS| sed "s|^| eu-central-1 \t|g"
+		aws ec2 describe-security-groups  --output text   --region eu-west-1 | grep  SECURITYGROUPS| sed "s|^| eu-west-1 \t|g"
+		aws ec2 describe-security-groups  --output text   --region eu-west-2 | grep  SECURITYGROUPS| sed "s|^| eu-west-2 \t|g"
+		aws ec2 describe-security-groups  --output text   --region eu-west-3 | grep  SECURITYGROUPS| sed "s|^| eu-west-3 \t|g"
+		aws ec2 describe-security-groups  --output text   --region sa-east-1 | grep  SECURITYGROUPS| sed "s|^| sa-east-1 \t|g";;
+
+
+
+                14)
+                                                echo -e "1. ami-1853ac65\t\tAmazon Linux AMI 2017.09.1 (HVM)\n2. ami-428aa838\t\tAmazon Linux 2 LTS Candidate AMI 2017.12.0 (HVM)\n3. ami-26ebbc5c\t\tRed Hat Enterprise Linux 7.4 (HVM)\n4. ami-66506c1c\t\tUbuntu Server 16.04 LTS (HVM)"
+                                                read -p "
+                                                                Enter your Choice of OS_TYPE :   "               OS_TYPE
+                                                                if [[ $OS_TYPE == "1" ]]; then
+                                                                                AMI_ID=ami-1853ac65;
+                                                                elif [[ $OS_TYPE == "2" ]]; then
+                                                                                AMI_ID=ami-428aa838;
+                                                                elif [[ $OS_TYPE == "3" ]]; then
+                                                                                AMI_ID=ami-26ebbc5c;
+                                                                elif [[ $OS_TYPE == "4" ]]; then
+                                                                                AMI_ID=ami-66506c1c;
+                                                                else
+                                                                                exit 127;
+                                                                fi
+
+                                                                                                
+                                                aws ec2 create-key-pair --key-name MyKeyPair_CLI --output text 
+                                                default_sg=$(aws ec2 describe-security-groups  --output text| grep default | awk '{print $6}')
+                                                
+                                                aws ec2 run-instances --image-id $AMI_ID  --count 1 --instance-type t2.micro --key-name MyKeyPair_CLI --security-group-ids $default_sg ;;
                 E)
                                 exit;;
                 *)
