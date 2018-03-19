@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 ####################################################################################
 ##
 ##    AWS CLI MENU DRIVEN SCRIPT TO PERFORM AWS INSTALLATION ON UBUNTU
@@ -14,6 +13,7 @@
 ##     +--------------------------------------------------------------------
 ##
 ####################################################################################
+
 check_ubuntu()
 {
 FLAOUR=$(grep "DISTRIB_ID=" /etc/lsb-release|cut -d'=' -f2)
@@ -165,6 +165,7 @@ echo "
                                 5. Set Output Format
                                 6. Set AWS ACCESS KEY ID
                                 7. Set AWS SECRET ACCESS KEY
+                                8. 
                                 E. Exit 
                                
                                "
@@ -175,19 +176,37 @@ case $input in
                 1)
                                 aws ec2 describe-regions --output table ;;
                 2)
-                                aws ec2 describe-regions --output text| awk '{print $NF}'| while read line ; do  
-                                
-                                                sed -i  "s|region = .*|region = $line|g" $HOME/.aws/config ; 
-                                                
-                                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running|egrep "running|AvailabilityZone|InstanceId"; 
-                                                
-                                done |tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -;;
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region us-east-1 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region us-east-2 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region us-west-1 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region us-west-2 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region ap-northeast-1 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region ap-northeast-2 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region ap-southeast-1 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region ap-southeast-2 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region eu-central-1 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region eu-west-1 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region eu-west-2 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region eu-west-3 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region sa-east-1 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -
+                                aws ec2 describe-instances --filters Name=instance-state-name,Values=running  --output table --region ap-south-1 |egrep "running|AvailabilityZone|InstanceId"|tr -d '|' |sed "s|  ||g"|sed "s|InstanceId||g"|sed "s|AvailabilityZone||g" |sed "s|Name||g"|sed "s|^ ||g" |paste - - -;; 
                 3)
-                                aws ec2 describe-regions --output text| awk '{print $NF}'| while read line ; do  
                                 
-                                                sed -i  "s|region = .*|region = $line|g"  $HOME/.aws/config;  aws ec2 describe-key-pairs|sed "s|^|  $line  |g"  ; 
-                                                
-                                done;;
+                                aws ec2 describe-key-pairs --region us-east-1|sed "s|^| us-east-1 \t|g"
+                                aws ec2 describe-key-pairs --region us-east-2 |sed "s|^| us-east-2 \t|g"
+                                aws ec2 describe-key-pairs --region us-west-1 |sed "s|^| us-west-1 \t|g"
+                                aws ec2 describe-key-pairs --region us-west-2 |sed "s|^| us-west-2 \t|g"
+                                aws ec2 describe-key-pairs --region ap-northeast-1 |sed "s|^| ap-northeast-1 \t|g"
+                                aws ec2 describe-key-pairs --region ap-northeast-2 |sed "s|^| ap-northeast-2 \t|g"
+                                aws ec2 describe-key-pairs --region ap-south-1 |sed "s|^| ap-south-1 \t|g"
+                                aws ec2 describe-key-pairs --region ap-southeast-1 |sed "s|^| ap-southeast-1 \t|g"
+                                aws ec2 describe-key-pairs --region ap-southeast-2 |sed "s|^| ap-southeast-2 \t|g"
+                                aws ec2 describe-key-pairs --region eu-central-1 |sed "s|^| eu-central-1 \t|g"
+                                aws ec2 describe-key-pairs --region eu-west-1 |sed "s|^| eu-west-1 \t|g"
+                                aws ec2 describe-key-pairs --region eu-west-2 |sed "s|^| eu-west-2 \t|g"
+                                aws ec2 describe-key-pairs --region eu-west-3 |sed "s|^| eu-west-3 \t|g"
+                                aws ec2 describe-key-pairs --region sa-east-1 |sed "s|^| sa-east-1 \t|g";;
+                                
                 4)
                                 aws ec2 describe-regions --output text| awk '{print $NF}'|nl
                                 
@@ -241,6 +260,22 @@ case $input in
                                                 echo "AWS_SECRET_ACCESS_KEY could not be updated"
                                                 
                                 fi;;
+                8)
+                                aws s3 ls --region us-east-1|sed "s|^| us-east-1 \t|g"
+                                aws s3 ls --region us-east-2 |sed "s|^| us-east-2 \t|g"
+                                aws s3 ls --region us-west-1 |sed "s|^| us-west-1 \t|g"
+                                aws s3 ls --region us-west-2 |sed "s|^| us-west-2 \t|g"
+                                aws s3 ls --region ap-northeast-1 |sed "s|^| ap-northeast-1 \t|g"
+                                aws s3 ls --region ap-northeast-2 |sed "s|^| ap-northeast-2 \t|g"
+                                aws s3 ls --region ap-south-1 |sed "s|^| ap-south-1 \t|g"
+                                aws s3 ls --region ap-southeast-1 |sed "s|^| ap-southeast-1 \t|g"
+                                aws s3 ls --region ap-southeast-2 |sed "s|^| ap-southeast-2 \t|g"
+                                aws s3 ls --region eu-central-1 |sed "s|^| eu-central-1 \t|g"
+                                aws s3 ls --region eu-west-1 |sed "s|^| eu-west-1 \t|g"
+                                aws s3 ls --region eu-west-2 |sed "s|^| eu-west-2 \t|g"
+                                aws s3 ls --region eu-west-3 |sed "s|^| eu-west-3 \t|g"
+                                aws s3 ls --region sa-east-1 |sed "s|^| sa-east-1 \t|g"
+                                
                 E)
                                 exit;;
                 *)
