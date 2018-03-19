@@ -167,6 +167,7 @@ echo "
                                 7. Set AWS SECRET ACCESS KEY
                                 8. List S3 Bucket
                                 9. List CodeCommit Repos
+                                10. List Storage Volumes
                                 E. Exit 
                                
                                "
@@ -294,6 +295,21 @@ case $input in
 		aws codecommit list-repositories  --region eu-west-3 |sed "s|^| eu-west-3 \t|g"
 		aws codecommit list-repositories  --region sa-east-1 |sed "s|^| sa-east-1 \t|g";;
                                 
+                10)
+		aws ec2 describe-volumes --output text  --region us-east-1|sed "s|^| us-east-1 \t|g"
+		aws ec2 describe-volumes --output text  --region us-east-2 |sed "s|^| us-east-2 \t|g"
+		aws ec2 describe-volumes --output text  --region us-west-1 |sed "s|^| us-west-1 \t|g"
+		aws ec2 describe-volumes --output text  --region us-west-2 |sed "s|^| us-west-2 \t|g"
+		aws ec2 describe-volumes --output text  --region ap-northeast-1 |sed "s|^| ap-northeast-1 \t|g"
+		aws ec2 describe-volumes --output text  --region ap-northeast-2 |sed "s|^| ap-northeast-2 \t|g"
+		aws ec2 describe-volumes --output text  --region ap-south-1 |sed "s|^| ap-south-1 \t|g"
+		aws ec2 describe-volumes --output text  --region ap-southeast-1 |sed "s|^| ap-southeast-1 \t|g"
+		aws ec2 describe-volumes --output text  --region ap-southeast-2 |sed "s|^| ap-southeast-2 \t|g"
+		aws ec2 describe-volumes --output text  --region eu-central-1 |sed "s|^| eu-central-1 \t|g"
+		aws ec2 describe-volumes --output text  --region eu-west-1 |sed "s|^| eu-west-1 \t|g"
+		aws ec2 describe-volumes --output text  --region eu-west-2 |sed "s|^| eu-west-2 \t|g"
+		aws ec2 describe-volumes --output text  --region eu-west-3 |sed "s|^| eu-west-3 \t|g"
+		aws ec2 describe-volumes --output text  --region sa-east-1 |sed "s|^| sa-east-1 \t|g";;
                 E)
                                 exit;;
                 *)
