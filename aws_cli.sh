@@ -274,7 +274,7 @@ case $input in
                                 aws s3 ls --region eu-west-1 |sed "s|^| eu-west-1 \t|g"
                                 aws s3 ls --region eu-west-2 |sed "s|^| eu-west-2 \t|g"
                                 aws s3 ls --region eu-west-3 |sed "s|^| eu-west-3 \t|g"
-                                aws s3 ls --region sa-east-1 |sed "s|^| sa-east-1 \t|g"
+                                aws s3 ls --region sa-east-1 |sed "s|^| sa-east-1 \t|g";;
                                 
                 E)
                                 exit;;
